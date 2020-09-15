@@ -12,4 +12,13 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimary" />
 
+    <EditText
+        android:id="@+id/et_no_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:text="@string/no_available_content"
+        android:gravity="center"/>
+
+
 </LinearLayout>
