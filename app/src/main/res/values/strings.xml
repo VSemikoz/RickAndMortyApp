@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RickAndMortyApp</string>
+    <string name="no_available_content">No available content</string>
 </resources>
