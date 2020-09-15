@@ -20,6 +20,7 @@ class CharactersListFragment @Inject constructor() : Fragment(), CharactersListC
     @Inject
     lateinit var mPresenter: CharactersListContract.Presenter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var noContentET: View
 
     @Inject
     lateinit var adapter: BaseAdapter<CharacterItem>
@@ -43,6 +44,7 @@ class CharactersListFragment @Inject constructor() : Fragment(), CharactersListC
 
     private fun initViews(root: View) {
         recyclerView = root.rv_news_feed
+        noContentET = root.et_no_content
         mPresenter.getCharacters()
         initRecyclerView()
         mPresenter.getCharacters()
@@ -50,7 +52,8 @@ class CharactersListFragment @Inject constructor() : Fragment(), CharactersListC
     }
 
     override fun showEmptyView() {
-
+        recyclerView.visibility = View.GONE
+        noContentET.visibility = View.VISIBLE
     }
 
     override fun showList(items: MutableList<CharacterItem>) {
