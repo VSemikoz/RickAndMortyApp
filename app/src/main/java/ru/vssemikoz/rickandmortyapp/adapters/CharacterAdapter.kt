@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.character_item.view.*
 import ru.vssemikoz.rickandmortyapp.R
 import ru.vssemikoz.rickandmortyapp.model.CharacterItem
+import ru.vssemikoz.rickandmortyapp.utils.imageUtlis.ImageUtils
 import javax.inject.Inject
 
 class CharacterAdapter @Inject constructor(context: Context) : BaseAdapter<CharacterItem>(context) {
@@ -31,16 +31,13 @@ class CharacterAdapter @Inject constructor(context: Context) : BaseAdapter<Chara
 
         init {
             cardView.setOnClickListener {
-                listener?.onRecyclerItemClick(adapterPosition)
+                listener?.onRecyclerItemClick(adapterPosition, characterImage)
             }
         }
 
         override fun onBind(item: CharacterItem, listener: OnRecyclerItemClickListener?) {
             characterName.text = item.name
-            Picasso.with(context)
-                .load(item.imageUrl)
-                .error(R.drawable.no_image_found)
-                .into(characterImage)
+            ImageUtils.setImageByUrl(item.imageUrl, characterImage)
         }
 
     }
