@@ -4,8 +4,7 @@ import dagger.Component
 import ru.vssemikoz.rickandmortyapp.MainApplication
 
 @Component(modules = [ApplicationModule::class,
-//    NetworkModule::class,
-//    DataBaseModule::class,
+    NetworkModule::class,
     AppConfigModule::class]
 )
 interface ApplicationComponent {
