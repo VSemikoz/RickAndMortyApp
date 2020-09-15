@@ -8,6 +8,7 @@ import ru.vssemikoz.rickandmortyapp.MainApplication
     AppConfigModule::class]
 )
 interface ApplicationComponent {
-    fun inject(mainApplication: MainApplication?)
-//    fun fragmentComponent(): FragmentComponent?
+    fun inject(mainApplication: MainApplication)
+
+    fun fragmentComponent(): FragmentComponent
 }
