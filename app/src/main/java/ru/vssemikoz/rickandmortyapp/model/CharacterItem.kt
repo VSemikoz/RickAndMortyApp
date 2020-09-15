@@ -1,5 +1,7 @@
 package ru.vssemikoz.rickandmortyapp.model
 
+import java.io.Serializable
+
 data class CharacterItem(
     val name: String,
     val status: String,
@@ -9,7 +11,7 @@ data class CharacterItem(
     val imageUrl: String,
     val episode: List<String>,
     val created: String
-) {
+) : Serializable {
     constructor(responseItem: CharacterResponseItem) : this(
         name = responseItem.name,
         status = responseItem.status,
