@@ -22,17 +22,13 @@ class RemoteCharacterRepository @Inject constructor() : CharacterRepository {
     private fun getNewsApiCallBack(listener: CharacterRepository.RequestListener): Callback<CharacterApiResponse> {
         return object : Callback<CharacterApiResponse> {
             override fun onResponse(
-                call: Call<CharacterApiResponse>,
-                response: Response<CharacterApiResponse>
+                call: Call<CharacterApiResponse>, response: Response<CharacterApiResponse>
             ) {
-                listener.onRequestSuccess(response)
-
+                if (!response.isSuccessful) listener.onRequestFailure(Throwable("Response is'n success"))
+                listener.onRequestSuccess(mapper.map(response.body()))
             }
 
-            override fun onFailure(
-                call: Call<CharacterApiResponse>,
-                t: Throwable
-            ) {
+            override fun onFailure(call: Call<CharacterApiResponse>, t: Throwable) {
                 listener.onRequestFailure(t)
 
             }
