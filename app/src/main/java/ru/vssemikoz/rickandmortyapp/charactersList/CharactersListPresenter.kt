@@ -9,8 +9,10 @@ class CharactersListPresenter @Inject constructor() : CharactersListContract.Pre
 
     private lateinit var view: CharactersListContract.View
     private var characterItems: MutableList<CharacterItem> = mutableListOf()
+
     @Inject
     lateinit var repository: CharacterRepository
+
     @Inject
     lateinit var mainApplication: MainApplication
 
@@ -21,23 +23,20 @@ class CharactersListPresenter @Inject constructor() : CharactersListContract.Pre
     override fun getCharacters() {
         repository.getCharacters(object : CharacterRepository.RequestListener {
             override fun onRequestSuccess(response: List<CharacterItem>) {
-                characterItems = mutableListOf()
                 characterItems.addAll(response)
                 updateNewsListUI()
             }
 
             override fun onRequestFailure(t: Throwable?) {
-                view.showEmptyView()
+                updateNewsListUI()
             }
         })
     }
 
     private fun updateNewsListUI() {
-        if (characterItems.isEmpty()) {
-            view.showEmptyView()
-        } else {
-            view.showList(characterItems)
+        when (characterItems.isEmpty()) {
+            true -> view.showEmptyView()
+            else -> view.showList(characterItems)
         }
     }
-
 }

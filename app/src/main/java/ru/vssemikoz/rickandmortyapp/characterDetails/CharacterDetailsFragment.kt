@@ -1,7 +1,6 @@
 package ru.vssemikoz.rickandmortyapp.characterDetails
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +18,7 @@ import javax.inject.Inject
 class CharacterDetailsFragment @Inject constructor() : Fragment(), CharacterDetailsContract.View {
     @Inject
     lateinit var mPresenter: CharacterDetailsContract.Presenter
+
     @Inject
     lateinit var mapper: CharacterMapper
     lateinit var characterToShow: CharacterItem
@@ -53,9 +53,8 @@ class CharacterDetailsFragment @Inject constructor() : Fragment(), CharacterDeta
     }
 
     private fun displayCharacter() {
-        Log.d("displayCharacter", "$characterToShow")
         val displayCharacter = mapper.map(characterToShow)
-        with(displayCharacter){
+        with(displayCharacter) {
             nameTV.text = name
             ImageUtils.setImageByUrl(imageUrl, imageIV)
             statusTV.text = status
@@ -68,7 +67,7 @@ class CharacterDetailsFragment @Inject constructor() : Fragment(), CharacterDeta
     }
 
     private fun initViews(root: View) {
-        with(root){
+        with(root) {
             nameTV = tv_details_name
             imageIV = iv_details_image
             statusTV = tv_details_status

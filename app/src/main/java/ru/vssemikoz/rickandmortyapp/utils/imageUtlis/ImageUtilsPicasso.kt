@@ -9,7 +9,7 @@ object ImageUtils {
     fun setImageByUrl(url: String, imageView: ImageView) {
         Picasso.with(MainApplication.getInstance()?.applicationContext)
             .load(url)
-            .error(R.drawable.no_image_found)
+            .error(R.mipmap.no_image_found)
             .into(imageView)
     }
 

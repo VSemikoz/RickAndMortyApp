@@ -9,7 +9,7 @@ object DateTypeConverter {
         return SimpleDateFormat(format, Locale.ENGLISH).parse(string)
     }
 
-    fun toString(date: Date,format: String): String {
+    fun toString(date: Date, format: String): String {
         return SimpleDateFormat(format, Locale.ENGLISH).format(date)
     }
 }

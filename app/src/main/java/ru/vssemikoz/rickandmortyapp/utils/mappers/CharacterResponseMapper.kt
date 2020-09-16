@@ -10,13 +10,13 @@ class CharacterResponseMapper @Inject constructor() : CharacterMapper {
     override fun map(response: CharacterApiResponse?): List<CharacterItem> {
         if (response == null) return listOf()
         val result = arrayListOf<CharacterItem>()
-        response.newsApiResponseItemList?.forEach { if (it != null) result.add(CharacterItem(it)) }
+        response.newsApiResponseListCharacter.forEach { if (it != null) result.add(CharacterItem(it)) }
         return result
     }
 
     override fun map(characterItem: CharacterItem): CharacterDetailsItem {
-        val fromFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        val toFormat = "dd MMM yyyy HH:mm:ss"
+        val fromDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        val toDateFormat = "dd MMM yyyy HH:mm:ss"
         return with(characterItem) {
             CharacterDetailsItem(
                 name = "Name: ${if (characterItem.name == "") "No name" else characterItem.name}",
@@ -28,19 +28,17 @@ class CharacterResponseMapper @Inject constructor() : CharacterMapper {
                 episode = "Episodes: ${if (characterItem.episode.isEmpty()) "No episodes"
                 else characterItem.getEpisodesNumbers()}",
                 created = "Created: ${if (characterItem.created == "") "Date unavailable"
-                else characterItem.getFormatDate(fromFormat, toFormat)}"
+                else characterItem.formatDate(fromDateFormat, toDateFormat)}"
             )
         }
     }
 
-    fun CharacterItem.getEpisodesNumbers(): String {
+    private fun CharacterItem.getEpisodesNumbers(): String {
         return episode.joinToString(separator = ", ") { it.substringAfterLast("/") }
     }
 
-    fun CharacterItem.getFormatDate(fromFormat: String, toFormat: String): String {
-        val date = DateTypeConverter.toDate(this.created, fromFormat)
-        return DateTypeConverter.toString(date!!, toFormat)
+    private fun CharacterItem.formatDate(fromFormat: String, toFormat: String): String {
+        val date = DateTypeConverter.toDate(this.created, fromFormat) ?: return created
+        return DateTypeConverter.toString(date, toFormat)
     }
-
-
 }
