@@ -28,7 +28,7 @@ class RemoteCharacterRepository @Inject constructor() : CharacterRepository {
             ) {
                 if (!response.isSuccessful) listener.onRequestFailure(Throwable("Response info is'n success"))
                 //get number of pages
-                var numberOfPages = response.body()?.newsApiResponseInfo?.pages?.toInt()
+                var numberOfPages = response.body()?.apiResponseInfo?.pages?.toInt()
                 if (numberOfPages == null) numberOfPages = 0
                 repeat(numberOfPages) {
                     //perform call for each page to get characters
