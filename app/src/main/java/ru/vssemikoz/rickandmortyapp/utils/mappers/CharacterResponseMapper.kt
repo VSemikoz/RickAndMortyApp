@@ -41,6 +41,4 @@ class CharacterResponseMapper @Inject constructor() : CharacterMapper {
         val date = DateTypeConverter.toDate(this.created, fromFormat) ?: return created
         return DateTypeConverter.toString(date, toFormat)
     }
-
-
 }
