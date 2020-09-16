@@ -10,7 +10,7 @@ class CharacterResponseMapper @Inject constructor() : CharacterMapper {
     override fun map(response: CharacterApiResponse?): List<CharacterItem> {
         if (response == null) return listOf()
         val result = arrayListOf<CharacterItem>()
-        response.newsApiResponseListCharacter.forEach { if (it != null) result.add(CharacterItem(it)) }
+        response.apiResponseListCharacter.forEach { if (it != null) result.add(CharacterItem(it)) }
         return result
     }
 
