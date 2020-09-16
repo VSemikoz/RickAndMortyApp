@@ -2,7 +2,7 @@ package ru.vssemikoz.rickandmortyapp.model
 
 import com.google.gson.JsonArray
 
-data class CharacterResponseItem(
+data class ResponseCharacterItem(
     val name: String,
     val status: String,
     val species: String,

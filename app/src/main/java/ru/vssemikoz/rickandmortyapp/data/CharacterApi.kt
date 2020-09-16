@@ -9,6 +9,7 @@ import ru.vssemikoz.rickandmortyapp.model.CharacterApiResponse
 interface CharacterApi {
     @GET("character/")
     fun getCharacters(@Query("page") pageNumber: String): Call<CharacterApiResponse>
+
     @GET("character/")
     fun getInfo(): Call<CharacterApiResponse>
 }

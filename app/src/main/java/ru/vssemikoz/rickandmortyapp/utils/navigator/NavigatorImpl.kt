@@ -26,7 +26,11 @@ class NavigatorImpl @Inject constructor(val context: Context) : Navigator {
 
             val transitionName: String = context.getString(R.string.character_image)
             val transitionActivityOptions =
-                ActivityOptions.makeSceneTransitionAnimation(fromActivity, imageView, transitionName)
+                ActivityOptions.makeSceneTransitionAnimation(
+                    fromActivity,
+                    imageView,
+                    transitionName
+                )
             fromActivity.startActivity(this, transitionActivityOptions.toBundle())
         }
     }

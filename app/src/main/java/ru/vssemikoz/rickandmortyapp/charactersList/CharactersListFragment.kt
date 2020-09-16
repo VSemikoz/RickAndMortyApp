@@ -20,8 +20,10 @@ class CharactersListFragment @Inject constructor() : Fragment(), CharactersListC
 
     @Inject
     lateinit var mPresenter: CharactersListContract.Presenter
+
     @Inject
     lateinit var adapter: BaseAdapter<CharacterItem>
+
     @Inject
     lateinit var navigator: Navigator
 
@@ -45,10 +47,8 @@ class CharactersListFragment @Inject constructor() : Fragment(), CharactersListC
     private fun initViews(root: View) {
         recyclerView = root.rv_news_feed
         noContentET = root.et_no_content
-        mPresenter.getCharacters()
         initRecyclerView()
         mPresenter.getCharacters()
-
     }
 
     override fun showEmptyView() {
@@ -67,7 +67,11 @@ class CharactersListFragment @Inject constructor() : Fragment(), CharactersListC
         adapter.listener = object : BaseAdapter.OnRecyclerItemClickListener {
             override fun onRecyclerItemClick(position: Int, imageView: ImageView) {
                 val character = adapter.items?.get(position)
-                if (character != null) navigator.openCharacterDetailsWithTransaction(character, imageView, activity!!)
+                if (character != null) navigator.openCharacterDetailsWithTransaction(
+                    character,
+                    imageView,
+                    activity!!
+                )
             }
         }
 

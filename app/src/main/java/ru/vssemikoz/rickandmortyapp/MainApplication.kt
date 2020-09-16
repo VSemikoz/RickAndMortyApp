@@ -7,7 +7,7 @@ import ru.vssemikoz.rickandmortyapp.di.ApplicationModule
 import ru.vssemikoz.rickandmortyapp.di.DaggerApplicationComponent
 
 class MainApplication : Application() {
-    companion object{
+    companion object {
 
         private lateinit var applicationComponent: ApplicationComponent
         private lateinit var instance: MainApplication

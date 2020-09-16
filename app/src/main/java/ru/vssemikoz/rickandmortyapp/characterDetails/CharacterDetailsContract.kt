@@ -6,7 +6,5 @@ interface CharacterDetailsContract {
         fun setView(view: View)
     }
 
-    interface View {
-
-    }
+    interface View
 }
