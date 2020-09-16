@@ -11,26 +11,50 @@ import javax.inject.Inject
 class RemoteCharacterRepository @Inject constructor() : CharacterRepository {
     @Inject
     lateinit var api: CharacterApi
+
     @Inject
     lateinit var mapper: CharacterMapper
 
     override fun getCharacters(listener: CharacterRepository.RequestListener) {
-        val call: Call<CharacterApiResponse> = api.getCharacters()
-        call.enqueue(getNewsApiCallBack(listener))
+        //get info from API to get number of pages of characters
+        val call: Call<CharacterApiResponse> = api.getInfo()
+        call.enqueue(getInfoApiCallBack(listener))
     }
 
-    private fun getNewsApiCallBack(listener: CharacterRepository.RequestListener): Callback<CharacterApiResponse> {
+    private fun getInfoApiCallBack(listener: CharacterRepository.RequestListener): Callback<CharacterApiResponse> {
         return object : Callback<CharacterApiResponse> {
             override fun onResponse(
                 call: Call<CharacterApiResponse>, response: Response<CharacterApiResponse>
             ) {
-                if (!response.isSuccessful) listener.onRequestFailure(Throwable("Response is'n success"))
+                if (!response.isSuccessful) listener.onRequestFailure(Throwable("Response info is'n success"))
+                //get number of pages
+                var numberOfPages = response.body()?.newsApiResponseInfo?.pages?.toInt()
+                if (numberOfPages == null) numberOfPages = 0
+                repeat(numberOfPages) {
+                    //perform call for each page to get characters
+                    val characterCall: Call<CharacterApiResponse> = api.getCharacters("$it")
+                    characterCall.enqueue(getCharacterApiCallBack(listener))
+                }
+            }
+
+            override fun onFailure(call: Call<CharacterApiResponse>, t: Throwable) {
+                listener.onRequestFailure(t)
+            }
+        }
+    }
+
+    private fun getCharacterApiCallBack(listener: CharacterRepository.RequestListener): Callback<CharacterApiResponse> {
+        return object : Callback<CharacterApiResponse> {
+            override fun onResponse(
+                call: Call<CharacterApiResponse>, response: Response<CharacterApiResponse>
+            ) {
+                if (!response.isSuccessful) listener.onRequestFailure(Throwable("Response character is'n success"))
+                //for each page update data on main page
                 listener.onRequestSuccess(mapper.map(response.body()))
             }
 
             override fun onFailure(call: Call<CharacterApiResponse>, t: Throwable) {
                 listener.onRequestFailure(t)
-
             }
         }
     }
