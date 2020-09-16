@@ -1,10 +1,10 @@
 package ru.vssemikoz.rickandmortyapp.charactersList
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,20 +13,20 @@ import ru.vssemikoz.rickandmortyapp.MainApplication
 import ru.vssemikoz.rickandmortyapp.R
 import ru.vssemikoz.rickandmortyapp.adapters.BaseAdapter
 import ru.vssemikoz.rickandmortyapp.model.CharacterItem
+import ru.vssemikoz.rickandmortyapp.utils.navigator.Navigator
 import javax.inject.Inject
 
 class CharactersListFragment @Inject constructor() : Fragment(), CharactersListContract.View {
 
     @Inject
     lateinit var mPresenter: CharactersListContract.Presenter
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var noContentET: View
-
     @Inject
     lateinit var adapter: BaseAdapter<CharacterItem>
-//    @Inject
-//    lateinit var navigator: Navigator
+    @Inject
+    lateinit var navigator: Navigator
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var noContentET: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,10 +64,10 @@ class CharactersListFragment @Inject constructor() : Fragment(), CharactersListC
     private fun initRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
-
         adapter.listener = object : BaseAdapter.OnRecyclerItemClickListener {
-            override fun onRecyclerItemClick(position: Int) {
-                Log.d("onRecyclerItemClick", "$position")
+            override fun onRecyclerItemClick(position: Int, imageView: ImageView) {
+                val character = adapter.items?.get(position)
+                if (character != null) navigator.openCharacterDetailsWithTransaction(character, imageView, activity!!)
             }
         }
 

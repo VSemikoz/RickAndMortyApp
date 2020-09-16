@@ -2,6 +2,7 @@ package ru.vssemikoz.rickandmortyapp.adapters
 
 import android.content.Context
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseAdapter<T>(val context: Context) : RecyclerView.Adapter<BaseViewHolder<T>>() {
@@ -14,7 +15,7 @@ abstract class BaseAdapter<T>(val context: Context) : RecyclerView.Adapter<BaseV
     }
 
     interface OnRecyclerItemClickListener {
-        fun onRecyclerItemClick(position: Int)
+        fun onRecyclerItemClick(position: Int, imageView: ImageView)
     }
 
     abstract override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<T>
@@ -25,22 +26,4 @@ abstract class BaseAdapter<T>(val context: Context) : RecyclerView.Adapter<BaseV
     }
 
     override fun getItemCount(): Int = items?.size ?: 0
-
-    fun deleteItem(position: Int) {
-        items!!.toMutableList().let {
-            it.removeAt(position)
-            items = it
-        }
-        notifyItemRemoved(position)
-    }
-
-    fun insertItem(item: T) {
-        items!!.toMutableList().let {
-            it.add(item)
-            items = it
-        }
-        notifyItemInserted(items!!.size)
-    }
-
 }
-
