@@ -24,16 +24,16 @@ class CharactersListPresenter @Inject constructor() : CharactersListContract.Pre
         repository.getCharacters(object : CharacterRepository.RequestListener {
             override fun onRequestSuccess(response: List<CharacterItem>) {
                 characterItems.addAll(response)
-                updateNewsListUI()
+                updateCharacterListUI()
             }
 
             override fun onRequestFailure(t: Throwable?) {
-                updateNewsListUI()
+                updateCharacterListUI()
             }
         })
     }
 
-    private fun updateNewsListUI() {
+    private fun updateCharacterListUI() {
         when (characterItems.isEmpty()) {
             true -> view.showEmptyView()
             else -> view.showList(characterItems)

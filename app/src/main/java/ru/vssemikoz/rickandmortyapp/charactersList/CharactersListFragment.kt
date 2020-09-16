@@ -45,7 +45,7 @@ class CharactersListFragment @Inject constructor() : Fragment(), CharactersListC
     }
 
     private fun initViews(root: View) {
-        recyclerView = root.rv_news_feed
+        recyclerView = root.rv_characters_list
         noContentET = root.et_no_content
         initRecyclerView()
         mPresenter.getCharacters()

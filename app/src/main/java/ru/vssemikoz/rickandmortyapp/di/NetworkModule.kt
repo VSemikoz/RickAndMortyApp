@@ -18,7 +18,7 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideNewsApi(retrofit: Retrofit): CharacterApi {
+    fun provideCharacterApi(retrofit: Retrofit): CharacterApi {
         return retrofit.create<CharacterApi>(CharacterApi::class.java)
     }
 }
